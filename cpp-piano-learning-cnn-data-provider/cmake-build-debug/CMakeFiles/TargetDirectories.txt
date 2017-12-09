@@ -1,0 +1,5 @@
+/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/CMakeFiles/cpp_piano_learning_cnn_data_provider.dir
+/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/CMakeFiles/rebuild_cache.dir
+/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/CMakeFiles/edit_cache.dir

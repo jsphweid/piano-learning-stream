@@ -1,0 +1,12 @@
+//
+// Created by Joseph Weidinger on 11/1/17.
+//
+
+#ifndef PIANOLEARNINGEARS_FILESANDFOLDERS_H
+#define PIANOLEARNINGEARS_FILESANDFOLDERS_H
+
+
+bool tmpFolderIsFull();
+
+
+#endif //PIANOLEARNINGEARS_FILESANDFOLDERS_H

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="pybind11"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="clang"/>
+		<Option virtualFolders="CMake Files\;CMake Files\pybind11\;CMake Files\pybind11\tools\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/cmake-build-debug/pybind11/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\pybind11\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\pybind11\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/tools/pybind11Tools.cmake">
+			<Option virtualFolder="CMake Files\pybind11\tools\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/tools/FindPythonLibsNew.cmake">
+			<Option virtualFolder="CMake Files\pybind11\tools\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/tools/pybind11Tools.cmake">
+			<Option virtualFolder="CMake Files\pybind11\tools\"/>
+		</Unit>
+		<Unit filename="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/tools/FindPythonLibsNew.cmake">
+			<Option virtualFolder="CMake Files\pybind11\tools\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
