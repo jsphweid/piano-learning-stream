@@ -25,9 +25,12 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-              <folding />
+            <state relative-caret-position="19">
+              <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#4736#4773#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -35,11 +38,22 @@
       <file leaf-file-name="streamHelpers.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/helpers/streamHelpers.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+            <state relative-caret-position="1672">
+              <caret line="88" column="6" lean-forward="false" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="6" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#226#270#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" column="69" lean-forward="false" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -50,15 +64,32 @@
     <findStrings>
       <find>cout</find>
       <find>buffereve</find>
-      <find>pickRandomBatchIndexes</find>
-      <find>allsamples</find>
       <find>free</find>
       <find>randomIndexes</find>
       <find>delete</find>
       <find>InputLabelPairing</find>
       <find>samplestartindex</find>
-      <find>process</find>
       <find>wavstartindex</find>
+      <find>all</find>
+      <find>process</find>
+      <find>buffer_size</find>
+      <find>vectorbufferevents</find>
+      <find>processE</find>
+      <find>ew float[bufferSize]()</find>
+      <find>signal</find>
+      <find>return conv</find>
+      <find>getFFTOfBuffer</find>
+      <find>fftsize</find>
+      <find>allsamples</find>
+      <find>allSamples[sampleName]</find>
+      <find>sample</find>
+      <find>main.cpp</find>
+      <find>dostuff</find>
+      <find>pickRandomBatchIndexes</find>
+      <find>bufferevent</find>
+      <find>new buffer</find>
+      <find>notesdepre</find>
+      <find>= new</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -82,8 +113,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/helpers/streamHelpers.cpp" />
         <option value="$PROJECT_DIR$/src/helpers/streamHelpers.h" />
+        <option value="$PROJECT_DIR$/src/main.cpp" />
       </list>
     </option>
   </component>
@@ -126,6 +159,30 @@
               <item name="cpp-piano-learning-cnn-data-provider" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="cpp_piano_learning_cnn_data_provider" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="cpp-piano-learning-cnn-data-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="helpers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cpp_piano_learning_cnn_data_provider" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="cpp-piano-learning-cnn-data-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lib-src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cpp_piano_learning_cnn_data_provider" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="cpp-piano-learning-cnn-data-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="lib-src" type="462c0819:PsiDirectoryNode" />
+              <item name="header-only" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="cpp_piano_learning_cnn_data_provider" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="cpp-piano-learning-cnn-data-provider" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -136,6 +193,15 @@
     <property name="settings.editor.selected.configurable" value="language.cpp" />
     <property name="nodejs_interpreter_path" value="$USER_HOME$/.nvm/versions/node/v7.7.1/bin/node" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/lib-src/header-only" />
+      <recent name="$PROJECT_DIR$/src/helpers" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -253,26 +319,27 @@
       <updated>1511406237614</updated>
       <workItem from="1511406240098" duration="2784000" />
       <workItem from="1512651497295" duration="2029000" />
-      <workItem from="1512767887664" duration="1839000" />
+      <workItem from="1512767887664" duration="25951000" />
+      <workItem from="1512924744754" duration="502000" />
+      <workItem from="1512998072926" duration="205000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6652000" />
+    <option name="totallyTimeSpent" value="31471000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="6" y="36" width="1268" height="694" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22920065" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23572594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -281,6 +348,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -299,7 +367,70 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4736#4773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/streamHelpers.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1596">
+          <caret line="84" column="6" lean-forward="false" selection-start-line="84" selection-start-column="6" selection-end-line="84" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#226#270#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="69" lean-forward="false" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="69" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4736#4773#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/streamHelpers.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1235">
+          <caret line="65" column="6" lean-forward="false" selection-start-line="65" selection-start-column="6" selection-end-line="65" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#226#270#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="69" lean-forward="false" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4736#4773#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -309,6 +440,7 @@
           <caret line="52" column="6" lean-forward="false" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#226#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -317,7 +449,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4736#4773#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -327,6 +462,7 @@
           <caret line="130" column="31" lean-forward="true" selection-start-line="130" selection-start-column="31" selection-end-line="130" selection-end-column="31" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#226#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -335,25 +471,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
           <caret line="7" column="24" lean-forward="true" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/lib-src/header-only/meow_fft.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="304">
+          <caret line="16" column="8" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/helpers/streamHelpers.cpp" />
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="69" lean-forward="false" selection-start-line="4" selection-start-column="61" selection-end-line="4" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/helpers/streamHelpers.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+        <state relative-caret-position="1672">
+          <caret line="88" column="6" lean-forward="false" selection-start-line="88" selection-start-column="6" selection-end-line="88" selection-end-column="6" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#226#270#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="16" column="42" lean-forward="true" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="19">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#4736#4773#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -9,36 +9,93 @@ namespace fs = ::boost::filesystem;
 
 namespace py = pybind11;
 
-class MyClass {
+class PianoLearnerDataProvider {
 public:
-    MyClass() {
-        int BATCH_SIZE = 10;
-        // allSamples = loadSamplesIntoMemory("/var/tmp/ivy/");
+    PianoLearnerDataProvider() {
+        float TRAINING_SIZE = 0.8;
+        allSamples = loadSamplesIntoMemory("/var/tmp/ivy/");
         vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/Users/josephweidinger/Downloads/dum/");
-        vector<int> randomIndexes = pickRandomBatchIndexes((int) vectorOfVectorBufferEvents.size(), BATCH_SIZE);
 
 
-        // TODO:
-//        vector<InputLabelPairing> allInputsAndLabelsForBatch;
-//
-//        for (int i = 0; i < BATCH_SIZE; i++) {
-//            InputLabelPairing pair = processEvents(vectorOfVectorBufferEvents[i]);
-//            allInputsAndLabelsForBatch.push_back(pair);
-//        }
+        // get index arrays
+        auto numTotalBuffers = (int) vectorOfVectorBufferEvents.size();
+        randomIndexes = generateRandomIndexes(numTotalBuffers);
+
+        auto numTrainingBuffers = (int) round(numTotalBuffers * TRAINING_SIZE);
+
+        for (int i = 0; i < numTrainingBuffers; i++) {
+            trainingIndexes.push_back(randomIndexes[i]);
+        }
+        for (int i = numTrainingBuffers; i < numTotalBuffers; i++) {
+            testIndexes.push_back(randomIndexes[i]);
+        }
+
 
     }
-    void dostuff();
+    vector<vector<vector<float>>> getTrainingBatch(int batchSize);
+    vector<vector<vector<float>>> getRandomTestData(int batchSize);
+    int BUFFER_SIZE = 1024;
 
 private:
-    // map<string, vector<float>> allSamples;
+    map<string, vector<float>> allSamples;
     vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
+    vector<int> randomIndexes;
+    vector<int> trainingIndexes;
+    vector<int> testIndexes;
 };
 
-void MyClass::dostuff() {
-    cout << "Hello from dostuff" << endl;
-}
+vector<vector<vector<float>>> PianoLearnerDataProvider::getTrainingBatch(int batchSize) {
+    vector<vector<vector<float>>> allInputsAndLabelsForBatch;
 
-// vector<vector<BufferEvent>> MyClass::getVectorOfVectorBufferEvents() {
+    vector<int> thisBatchRandomIndexes = pickRandomIndexes(trainingIndexes, batchSize);
+
+    ////////////// TEMP PRINT START
+    // cout << "this training label batch size: " << batchSize << " of " << trainingIndexes.size() << endl;
+    // cout << "training indexes for this batch indexes: ";
+    // cout << endl;
+    // cout << "vectorOfVectorBufferEvents size: " << vectorOfVectorBufferEvents.size() << endl;
+    ////////////// TEMP PRINT END
+
+    vector<vector<float>> inputs;
+    vector<vector<float>> labels;
+
+    for (auto & i : thisBatchRandomIndexes) {
+        InputLabelPairing pair = processEvents(allSamples, vectorOfVectorBufferEvents[i], BUFFER_SIZE);
+        inputs.push_back(pair.fftInput);
+        labels.push_back(pair.ampLabel);
+    }
+
+    allInputsAndLabelsForBatch.push_back(inputs);
+    allInputsAndLabelsForBatch.push_back(labels);
+
+   return allInputsAndLabelsForBatch;
+};
+
+vector<vector<vector<float>>> PianoLearnerDataProvider::getRandomTestData(int batchSize) {
+    vector<vector<vector<float>>> allInputsAndLabelsForTestData;
+    vector<int> thisBatchRandomIndexes = pickRandomIndexes(testIndexes, batchSize);
+    ////////////// TEMP PRINT START
+    // cout << "total test data: " << allInputsAndLabelsForTestData.size() << endl;
+    // cout << "test indexes: ";
+    // cout << endl;
+    ////////////// TEMP PRINT END
+
+    vector<vector<float>> inputs;
+    vector<vector<float>> labels;
+
+    for (auto & i : thisBatchRandomIndexes) {
+        InputLabelPairing pair = processEvents(allSamples, vectorOfVectorBufferEvents[i], BUFFER_SIZE);
+        inputs.push_back(pair.fftInput);
+        labels.push_back(pair.ampLabel);
+    }
+
+    allInputsAndLabelsForTestData.push_back(inputs);
+    allInputsAndLabelsForTestData.push_back(labels);
+
+    return allInputsAndLabelsForTestData;
+};
+
+// vector<vector<BufferEvent>> PianoLearnerDataProvider::getVectorOfVectorBufferEvents() {
 //     return vectorOfVectorBufferEvents;
 // };
 
@@ -60,6 +117,8 @@ void MyClass::dostuff() {
 // but not just have a vector of Buffer events instead of separate files? combine them all?
 
 
+
+
 PYBIND11_MODULE(cpp_piano_learning_cnn_data_provider, m) {
     m.doc() = R"pbdoc(
         Pybind11 example plugin
@@ -74,9 +133,10 @@ PYBIND11_MODULE(cpp_piano_learning_cnn_data_provider, m) {
            subtract
     )pbdoc";
 
-    py::class_<MyClass> myClass(m, "MyClass");
-    myClass.def(py::init<>());
-    myClass.def("dostuff", &MyClass::dostuff);
+    py::class_<PianoLearnerDataProvider> pianoLearnerDataProvider(m, "PianoLearnerDataProvider");
+    pianoLearnerDataProvider.def(py::init<>());
+    pianoLearnerDataProvider.def("getTrainingBatch", &PianoLearnerDataProvider::getTrainingBatch);
+    pianoLearnerDataProvider.def("getRandomTestData", &PianoLearnerDataProvider::getRandomTestData);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = VERSION_INFO;

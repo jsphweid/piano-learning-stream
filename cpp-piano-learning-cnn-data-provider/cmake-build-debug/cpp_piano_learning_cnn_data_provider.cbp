@@ -47,6 +47,7 @@
 					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/include"/>
 					<Add directory="/Users/josephweidinger/anaconda/include/python3.6m"/>
 					<Add directory="/usr/local/Cellar/boost/1.65.1/include"/>
+					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/src/lib-src/header-only"/>
 					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/include"/>
 					<Add directory="/usr/local/Cellar/libsndfile/1.0.28/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>
@@ -74,6 +75,7 @@
 					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/include"/>
 					<Add directory="/Users/josephweidinger/anaconda/include/python3.6m"/>
 					<Add directory="/usr/local/Cellar/boost/1.65.1/include"/>
+					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/src/lib-src/header-only"/>
 					<Add directory="/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/include"/>
 					<Add directory="/usr/local/Cellar/libsndfile/1.0.28/include"/>
 					<Add directory="/Library/Developer/CommandLineTools/usr/bin/../include/c++/v1"/>

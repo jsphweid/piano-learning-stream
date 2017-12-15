@@ -13,6 +13,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../pybind11/include"
   "/Users/josephweidinger/anaconda/include/python3.6m"
   "/usr/local/Cellar/boost/1.65.1/include"
+  "../src/lib-src/header-only"
   "../include"
   "/usr/local/Cellar/libsndfile/1.0.28/include"
   )
