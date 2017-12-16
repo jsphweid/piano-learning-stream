@@ -86,29 +86,27 @@ y_conv = tf.matmul(h_fc1_dropped, W_fc2) + b_fc2
 
 # h_pool2_reshaped = tf.reshape(h_pool2, [-1, THIRD_LAYER_SIZE])
 # y_conv = tf.matmul(h_pool2_reshaped, W_fc) + b_fc
-difference = tf.subtract(y_, y_conv)
-squared_difference = tf.square(difference)
-loss_op = tf.reduce_sum(squared_difference)
+loss_op = tf.reduce_sum(tf.square(tf.subtract(y_, y_conv)))
 train_step = tf.train.AdamOptimizer(0.001).minimize(loss_op)
 
-def datasetHasBogusNumbers(dataset):
-	for i in range(len(dataset)):
-		if sum(dataset[i]) == 0 or sum(dataset[i]) > 20000:
-			return True
-	return False		
+# def datasetHasBogusNumbers(dataset):
+# 	for i in range(len(dataset)):
+# 		if sum(dataset[i]) == 0 or sum(dataset[i]) > 20000:
+# 			return True
+# 	return False		
 
-def dataprovider_wrapper(batch_size):
-	## temp until we find the source of these nans...
-	nan_found = True
-	i = 0
-	while nan_found:
-		i = i + 1
-		batch_xs, batch_ys = dataProvider.getTrainingBatch(batch_size)
-		if not np.isnan(batch_xs).any() and not np.isnan(batch_ys).any():
-			if not datasetHasBogusNumbers(batch_xs) and not datasetHasBogusNumbers(batch_ys):
-				nan_found = False
-	# print("went through", i, "times")
-	return [batch_xs, batch_ys]
+# def dataprovider_wrapper(batch_size):
+# 	## temp until we find the source of these nans...
+# 	nan_found = True
+# 	i = 0
+# 	while nan_found:
+# 		i = i + 1
+# 		batch_xs, batch_ys = dataProvider.getTrainingBatch(batch_size)
+# 		if not np.isnan(batch_xs).any() and not np.isnan(batch_ys).any():
+# 			if not datasetHasBogusNumbers(batch_xs) and not datasetHasBogusNumbers(batch_ys):
+# 				nan_found = False
+# 	# print("went through", i, "times")
+# 	return [batch_xs, batch_ys]
 
 
 
@@ -118,23 +116,23 @@ with tf.Session() as sess:
 
 	for i in range(50000):
 		# input("Press Enter to continue...")
-		batch_xs, batch_ys = dataprovider_wrapper(20)
-		if (np.isnan(batch_xs).any() or np.isnan(batch_ys).any()):
-			print("this is not supposed to happen!!!!!!")
+		batch_xs, batch_ys = dataProvider.getTrainingBatch(10)
+		# if (np.isnan(batch_xs).any() or np.isnan(batch_ys).any()):
+			# print("this is not supposed to happen!!!!!!")
 		# print("batch_xs", batch_xs)
 		# print("batch_ys", batch_ys)
-		# print("batch_xs contain nan", np.isnan(batch_xs).any())
-		# print("batch_ys contain nan", np.isnan(batch_ys).any())
-		diff, s_diff, loss, _ = sess.run([difference, squared_difference, loss_op, train_step], feed_dict={x_: batch_xs, y_: batch_ys, keep_prob: 0.5})
+		sess.run(train_step, feed_dict={x_: batch_xs, y_: batch_ys, keep_prob: 0.5})
 		# print('diff', diff)
 		# print('s_diff', s_diff)
 		# print('loss', loss)
 
-		# print('chek_numerics', chek_numerics)
+		# if np.isnan(loss) or np.isinf(loss):
+			# input("Press Enter to continue...")
+
 		if i % 10 == 0:
-			test_xs, test_ys = dataprovider_wrapper(100)
-			initial_x, expected_y, end_y, test_loss = sess.run([x_, y_, y_conv, loss_op], feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
-			# test_loss = loss_op.eval(feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
+			test_xs, test_ys = dataProvider.getTrainingBatch(10)
+			# initial_x, expected_y, end_y, test_loss = sess.run([x_, y_, y_conv, loss_op], feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
+			test_loss = loss_op.eval(feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
 			# print('initial_x', initial_x)
 			# print('expected_y', expected_y)
 			# print("endy", end_y)

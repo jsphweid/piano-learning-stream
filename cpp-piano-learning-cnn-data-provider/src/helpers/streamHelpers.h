@@ -120,9 +120,8 @@ vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder) {
     fs::recursive_directory_iterator endit;
 
     vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
-    int i = 0;
 
-    while(it != endit && i < 4) { // temp limit is 4, take i out eventually
+    while(it != endit) { // temp limit is 4, take i out eventually
 
         string fullFilename = it->path().string();
         cout << "loading json midi file: " << fullFilename << endl;
@@ -132,7 +131,6 @@ vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder) {
 
         vector<vector<BufferEvent>> oneFile = processOneJsonFile(j);
         vectorOfVectorBufferEvents.insert(vectorOfVectorBufferEvents.end(), oneFile.begin(), oneFile.end());
-        i++;
         ++it;
     }
     return vectorOfVectorBufferEvents;
@@ -155,12 +153,6 @@ vector<int> generateRandomIndexes(int totalSize) {
     return pickRandomIndexes(arange, totalSize);
 }
 
-string convertMidiNoteToPianoNoteNum(int midiNote) {
-    int newNum = midiNote - 20;
-    string numAsString = to_string(newNum);
-    return (newNum < 10) ? "0" + numAsString : numAsString;
-}
-
 string pickAppropriateWavFile(int midiNote, float velocity) {
     string levels[10] = {
             "PedalOffPiano1Close",
@@ -176,7 +168,15 @@ string pickAppropriateWavFile(int midiNote, float velocity) {
     };
 
     auto index = (int) floor(velocity * 10.0);
-    return convertMidiNoteToPianoNoteNum(midiNote) + "-" + levels[index];
+    if (index == 10) {
+        index = 9;
+    }
+
+    string noteNum = (midiNote < 10)
+        ? "0" + to_string(midiNote)
+        : to_string(midiNote);
+
+    return noteNum + "-" + levels[index];
 }
 
 void getFFTOfBuffer(int bufferSize, int fftSize, float* audioBufferIn, float* maggedArrayOut) {
@@ -216,26 +216,37 @@ InputLabelPairing processEvents(map<string, vector<float>> const &allSamples, ve
     //     cout << item << " ";
     // }
     // cout << endl;
+    // cout << "size" << stuff.size() << endl;
 
     for (BufferEvent bufferEvent : bufferEvents) {
+        // cout << endl;
         // cout << "pianoNoteNum " << bufferEvent.pianoNoteNum << endl;
         // cout << "velocity " << bufferEvent.velocity << endl;
         // cout << "sampleStartIndex " << bufferEvent.sampleStartIndex << endl;
         // cout << "sampleEndIndex " << bufferEvent.sampleEndIndex << endl;
-        // cout << "offsetStartIndex " << bufferEvent.offsetStartIndex << endl << endl;;
+        // cout << "offsetStartIndex " << bufferEvent.offsetStartIndex << endl;
         string sampleName = pickAppropriateWavFile(bufferEvent.pianoNoteNum, bufferEvent.velocity);
         
         vector<float> sample = allSamples.find(sampleName)->second;
 
+        // cout << "picked this sample...: " << sampleName << endl;
+        // for (int const &item : sample) {
+        //     cout << item << " ";
+        // }
+        // cout << endl;
+        // cout << "size: " << sample.size() << endl;
+
+
         int sampleLength = bufferEvent.sampleEndIndex - bufferEvent.sampleStartIndex;
         float amp = 0;
         // cout << "sample length: " << sampleLength << endl;
-        // if (sampleLength != 1024) cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
         // cout << "offset start index: " << bufferEvent.offsetStartIndex << endl;
         for (int i = bufferEvent.offsetStartIndex, j = 0; i < bufferEvent.offsetStartIndex + sampleLength; i++, j++) {
             auto currentSample = sample[bufferEvent.sampleStartIndex + j];
             signal[i] += currentSample;
+            // cout << signal[i] << "i ";
             amp += (float) pow(currentSample, 2);
+            // cout << amp << "a ";
         }
         // cout << endl;
         // cout << "final amp for piano note: " << bufferEvent.pianoNoteNum << ": " << amp << endl;
@@ -254,6 +265,7 @@ InputLabelPairing processEvents(map<string, vector<float>> const &allSamples, ve
     delete[] fft;
     delete[] signal;
 
+    // cout << "fft of buffer" << endl;
     // for (auto item : fftAsVector) {
     //     cout << item << " ";
     // }
