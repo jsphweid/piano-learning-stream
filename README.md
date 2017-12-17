@@ -6,7 +6,7 @@ The model takes in an FFT slice that is [512] values in length (taken from an au
 This repository contains two main components.
  - Custom C/C++ Python module (using pybind11) provides training and test data on demand.
         - stores 880 piano samples (Ivy Audio's free piano library: Piano in 162) in memory
-        - processes a handful of specially tailored midi-json files [MidiConvertWrapperAdvanced](https://github.com/jsphweid/MidiConvertWrapperAdvanced) into many vectors containing one or more Events that 'would be' in one audio buffer memory and splits them into training/test portions
+        - processes a handful of specially tailored midi-json files [(MidiConvertWrapperAdvanced)](https://github.com/jsphweid/MidiConvertWrapperAdvanced) into many vectors containing one or more Events that 'would be' in one audio buffer memory and splits them into training/test portions
         - when `data_provider.getTrainingBatch(50)` is called (for example), a random batch of 50 arrays in the training portion is sent through a synthesizing process. This process creates 50 signals from which 50 vectors of FFTs and 50 vectors of amplitude (found by simply summing the squares of the relevant samples pertaining to each Event).
  - basic Convolutional Neural Network built with TensorFlow
 
@@ -23,7 +23,7 @@ This repository contains two main components.
 ```
  - preparing the midi-json files
          - find a bunch of midi files online or where-ever. It doesn't even really matter what their content is (since it will render them as piano and learn from that anyways...)
-         - use `./bin/MidiConvertWrapperAdvanced.js` to convert them into my special json files [MidiConvertWrapperAdvanced](https://github.com/jsphweid/MidiConvertWrapperAdvanced)
+         - use `./bin/MidiConvertWrapperAdvanced.js` to convert them into my special json files [(MidiConvertWrapperAdvanced)](https://github.com/jsphweid/MidiConvertWrapperAdvanced)
          - put them in the folder `~/Downloads/dum` (temp)
   - running everything
          - I highly recommend creating a virtual python environment with virtualenv. Something like:
