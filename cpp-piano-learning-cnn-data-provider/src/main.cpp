@@ -14,7 +14,8 @@ public:
     PianoLearnerDataProvider() {
         float TRAINING_SIZE = 0.8;
         allSamples = loadSamplesIntoMemory("/var/tmp/ivy/");
-        vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/Users/josephweidinger/Downloads/dum/");
+        map<string, int> sampleSizes = determineSampleSizes(allSamples);
+        vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/Users/josephweidinger/Downloads/dum/", sampleSizes);
 
 
         // get index arrays

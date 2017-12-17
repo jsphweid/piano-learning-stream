@@ -77,6 +77,40 @@ map<string, vector<float>> loadSamplesIntoMemory(string ivyLocation) {
     return ret;
 }
 
+string pickAppropriateWavFile(int pianoNote, float velocity) {
+    string levels[10] = {
+            "PedalOffPiano1Close",
+            "PedalOffPiano2Close",
+            "PedalOffPianissimo1Close",
+            "PedalOffPianissimo1Close",
+            "PedalOffMezzoPiano1Close",
+            "PedalOffMezzoPiano2Close",
+            "PedalOffMezzoForte1Close",
+            "PedalOffMezzoForte2Close",
+            "PedalOffForte1Close",
+            "PedalOffForte2Close"
+    };
+
+    auto index = (int) floor(velocity * 10.0);
+    if (index == 10) {
+        index = 9;
+    }
+
+    string noteNum = (pianoNote < 10)
+        ? "0" + to_string(pianoNote)
+        : to_string(pianoNote);
+
+    return noteNum + "-" + levels[index];
+}
+
+map<string, int> determineSampleSizes(map<string, vector<float>> inMemorySamples) {
+    map<string, int> ret;
+    for (auto const &vec : inMemorySamples) {
+        ret[vec.first] = vec.second.size();
+    }
+    return ret;
+}
+
 class BufferEvent {
 public:
     int pianoNoteNum;
@@ -92,36 +126,53 @@ public:
     vector<float> ampLabel;
 };
 
-vector<vector<BufferEvent>> processOneJsonFile(json j) {
+vector<vector<BufferEvent>> processOneJsonFile(json j, map<string, int> sampleSizes) {
 
     vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
 
     for (json::iterator jsoniterator = j.begin(); jsoniterator != j.end(); ++jsoniterator) {
-
+        bool containsOutOfRange = false;
         vector<BufferEvent> vectorOfBufferEvents;
+        // if this buffer has an index greater than the loaded wavs can provide... skip it..
         for (auto event: jsoniterator.value()) {
+
             BufferEvent bufferEvent;
             bufferEvent.pianoNoteNum = event["pianoNoteNum"];
             bufferEvent.sampleEndIndex = event["sampleEndIndex"];
             bufferEvent.sampleStartIndex = event["sampleStartIndex"];
             bufferEvent.offsetStartIndex = event["offsetStartIndex"];
             bufferEvent.velocity = event["velocity"];
+
+            string wavName = pickAppropriateWavFile(bufferEvent.pianoNoteNum, bufferEvent.velocity);
+            int numActualSamples = sampleSizes.find(wavName)->second;
+            if (numActualSamples < bufferEvent.sampleEndIndex) {
+                containsOutOfRange = true;
+                break;
+            }
+
             vectorOfBufferEvents.push_back(bufferEvent);
         }
-        vectorOfVectorBufferEvents.push_back(vectorOfBufferEvents);
+        if (!containsOutOfRange) { 
+            vectorOfVectorBufferEvents.push_back(vectorOfBufferEvents);
+        }
     }
 
     return vectorOfVectorBufferEvents;
 }
 
-vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder) {
+vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder, map<string, int> sampleSizes) {
 
     fs::recursive_directory_iterator it(jsonFolder);
     fs::recursive_directory_iterator endit;
 
     vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
 
-    while(it != endit) { // temp limit is 4, take i out eventually
+    while(it != endit) {
+
+        if (it->path().extension() != ".json") {
+            ++it;
+            continue;
+        }
 
         string fullFilename = it->path().string();
         cout << "loading json midi file: " << fullFilename << endl;
@@ -129,7 +180,7 @@ vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder) {
         json j;
         input >> j;
 
-        vector<vector<BufferEvent>> oneFile = processOneJsonFile(j);
+        vector<vector<BufferEvent>> oneFile = processOneJsonFile(j, sampleSizes);
         vectorOfVectorBufferEvents.insert(vectorOfVectorBufferEvents.end(), oneFile.begin(), oneFile.end());
         ++it;
     }
@@ -151,32 +202,6 @@ vector<int> generateRandomIndexes(int totalSize) {
         arange.push_back(i);
     }
     return pickRandomIndexes(arange, totalSize);
-}
-
-string pickAppropriateWavFile(int midiNote, float velocity) {
-    string levels[10] = {
-            "PedalOffPiano1Close",
-            "PedalOffPiano2Close",
-            "PedalOffPianissimo1Close",
-            "PedalOffPianissimo1Close",
-            "PedalOffMezzoPiano1Close",
-            "PedalOffMezzoPiano2Close",
-            "PedalOffMezzoForte1Close",
-            "PedalOffMezzoForte2Close",
-            "PedalOffForte1Close",
-            "PedalOffForte2Close"
-    };
-
-    auto index = (int) floor(velocity * 10.0);
-    if (index == 10) {
-        index = 9;
-    }
-
-    string noteNum = (midiNote < 10)
-        ? "0" + to_string(midiNote)
-        : to_string(midiNote);
-
-    return noteNum + "-" + levels[index];
 }
 
 void getFFTOfBuffer(int bufferSize, int fftSize, float* audioBufferIn, float* maggedArrayOut) {
