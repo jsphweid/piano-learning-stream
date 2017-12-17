@@ -2,12 +2,6 @@
 import cpp_piano_learning_cnn_data_provider as provider
 dataProvider = provider.PianoLearnerDataProvider()
 
-# supresses a warning that I'd otherwise get because tensorflow
-# wasn't compiled on this machine (used pip install))
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
-
-
 import numpy as np
 import tensorflow as tf 
 
