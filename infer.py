@@ -1,9 +1,9 @@
-# establish my custom data provider
-import cpp_piano_learning_cnn_data_provider as provider
-dataProvider = provider.PianoLearnerDataProvider()
-
 import numpy as np
-import tensorflow as tf 
+from numpy import reshape
+import tensorflow as tf
+import wave
+import math
+from scipy.fftpack import fft
 
 FFT_SIZE = 512
 CONV_SIZE = 20
@@ -25,8 +25,6 @@ def max_pool_2(x):
 
 ######### DECLARE VARIABLES
 x_ = tf.placeholder(tf.float32, shape=[None, FFT_SIZE], name="x_")
-y_ = tf.placeholder(tf.float32, shape=[None, NUM_KEYS], name="y_")
-keep_prob = tf.placeholder(tf.float32)
 
 x_resized = tf.reshape(x_, [-1, FFT_SIZE, 1])
 
@@ -67,29 +65,49 @@ b_fc2 = get_bias_variable([NUM_KEYS])
 
 y_conv = tf.matmul(h_fc1_dropped, W_fc2) + b_fc2
 
-loss_op = tf.reduce_mean(tf.square(tf.subtract(y_, y_conv)))
-train_step = tf.train.AdamOptimizer(0.001).minimize(loss_op)
+saver = tf.train.Saver()
 
+def normalizeIntArrayToOnes(int_array):
+    number_of_bits = 0
+    if int_array.dtype == 'int16':
+        number_of_bits = 16  # -> 16-bit wav files
+    elif int_array.dtype == 'int32':
+        number_of_bits = 32  # -> 32-bit wav files
+    if number_of_bits == 16 or number_of_bits == 32:
+        max_number = float(2 ** (number_of_bits - 1))
+        return int_array / (max_number + 1.0)
+
+def getWavFileNormalizedToOnes(wavFile):
+    wavFileAsIntArray = np.fromstring(wavFile.readframes(-1), 'Int16')
+    return normalizeIntArrayToOnes(wavFileAsIntArray)
+
+
+# load wav file and get contents
+wave_file = wave.open('./wavs/bachCMajor.wav', 'r')
+num_samples = wave_file.getnframes()
+buffer_length = 1024
+fft_length = int(buffer_length / 2)
+num_even_buffers = math.floor(num_samples / buffer_length)
+all_samples = getWavFileNormalizedToOnes(wave_file)
+
+# numpy matrix for the entire size of the file
 
 with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
-	saver = tf.train.Saver()
+	saver.restore(sess, "/tmp/pls_checkpoints/200000-0.38111piano-learning-stream.ckpt")
 
-	for i in range(500000):
-		batch_xs, batch_ys = dataProvider.getTrainingBatch(30)
 
-		training_loss, _ = sess.run([loss_op, train_step], feed_dict={x_: batch_xs, y_: batch_ys, keep_prob: 0.5})
+	for i in range(num_even_buffers):
+		start_index = i * num_even_buffers
+		this_buffer_signal = all_samples[start_index:start_index + buffer_length]
+		this_buffer_fft = abs(fft(this_buffer_signal))[0:fft_length]
+		this_buffer_fft_reshaped = this_buffer_fft.reshape((1, fft_length))
+		raw_prediction = sess.run(y_conv, feed_dict={ x_: this_buffer_fft_reshaped })
 
-		if i % 10 == 0:
 
-			test_xs, test_ys = dataProvider.getMiniTestData()
-			test_loss = loss_op.eval(feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
+	
 
-			print(i, ':', 'loss from training', training_loss, ': loss from test', test_loss)
-
-		if i % 50000 == 0:
-			filename = '/tmp/pls_checkpoints/' + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
-			save_path = saver.save(sess, filename)
+	
 
 
