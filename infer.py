@@ -25,6 +25,7 @@ def max_pool_2(x):
 
 ######### DECLARE VARIABLES
 x_ = tf.placeholder(tf.float32, shape=[None, FFT_SIZE], name="x_")
+keep_prob = tf.placeholder(tf.float32)
 
 x_resized = tf.reshape(x_, [-1, FFT_SIZE, 1])
 
@@ -97,13 +98,14 @@ with tf.Session() as sess:
 	sess.run(tf.global_variables_initializer())
 	saver.restore(sess, "/tmp/pls_checkpoints/200000-0.38111piano-learning-stream.ckpt")
 
-
 	for i in range(num_even_buffers):
-		start_index = i * num_even_buffers
+
+		start_index = i * buffer_length
 		this_buffer_signal = all_samples[start_index:start_index + buffer_length]
 		this_buffer_fft = abs(fft(this_buffer_signal))[0:fft_length]
 		this_buffer_fft_reshaped = this_buffer_fft.reshape((1, fft_length))
-		raw_prediction = sess.run(y_conv, feed_dict={ x_: this_buffer_fft_reshaped })
+		raw_prediction = sess.run(y_conv, feed_dict={ x_: this_buffer_fft_reshaped.astype(float), keep_prob: 1.0 })
+		print(raw_prediction)
 
 
 	
