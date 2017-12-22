@@ -97,6 +97,7 @@ with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
 	saver.restore(sess, "/tmp/pls_checkpoints/200000-0.38111piano-learning-stream.ckpt")
+	predictions = []
 
 	for i in range(num_even_buffers):
 
@@ -105,7 +106,9 @@ with tf.Session() as sess:
 		this_buffer_fft = abs(fft(this_buffer_signal))[0:fft_length]
 		this_buffer_fft_reshaped = this_buffer_fft.reshape((1, fft_length))
 		raw_prediction = sess.run(y_conv, feed_dict={ x_: this_buffer_fft_reshaped.astype(float), keep_prob: 1.0 })
-		print(raw_prediction)
+		predictions.append(raw_prediction)
+	
+	print(predictions)
 
 
 	
