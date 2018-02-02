@@ -11,7 +11,6 @@ namespace py = pybind11;
 
 class PianoLearnerDataProvider {
 public:
-
     vector<vector<vector<float>>> getTrainingBatch(int batchSize);
     vector<vector<vector<float>>> getMiniTestData();
     int BUFFER_SIZE = 1024;
@@ -35,9 +34,7 @@ public:
             testIndexes.push_back(randomIndexes[i]);
         }
         miniTestIndexes = pickRandomIndexes(testIndexes, 500);
-
     }
-
 private:
     map<string, vector<float>> allSamples;
     vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
