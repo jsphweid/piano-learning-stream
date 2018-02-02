@@ -76,6 +76,8 @@ with tf.Session() as sess:
 	sess.run(tf.global_variables_initializer())
 	saver = tf.train.Saver()
 
+	lowest_loss = 10
+
 	for i in range(500000):
 		batch_xs, batch_ys = dataProvider.getTrainingBatch(30)
 
@@ -87,9 +89,10 @@ with tf.Session() as sess:
 			test_loss = loss_op.eval(feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
 
 			print(i, ':', 'loss from training', training_loss, ': loss from test', test_loss)
-
-		if i % 50000 == 0:
-			filename = '/tmp/pls_checkpoints/' + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
-			save_path = saver.save(sess, filename)
-
+			
+			if test_loss < lowest_loss:
+				lowest_loss = test_loss
+				print('--------------------------> new record at num:', lowest_loss)
+				filename = '/var/tmp/pls_checkpoints/' + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
+				save_path = saver.save(sess, filename)
 
