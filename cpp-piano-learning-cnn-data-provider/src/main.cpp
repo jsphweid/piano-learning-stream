@@ -11,12 +11,17 @@ namespace py = pybind11;
 
 class PianoLearnerDataProvider {
 public:
+
+    vector<vector<vector<float>>> getTrainingBatch(int batchSize);
+    vector<vector<vector<float>>> getMiniTestData();
+    int BUFFER_SIZE = 1024;
+    float TRAINING_SIZE = 0.8;
+
     PianoLearnerDataProvider() {
         // load things into memory
         allSamples = loadSamplesIntoMemory("/var/tmp/ivy/");
         map<string, int> sampleSizes = determineSampleSizes(allSamples);
         vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/Users/josephweidinger/Downloads/dum/", sampleSizes);
-
 
         // get index arrays
         auto numTotalBuffers = (int) vectorOfVectorBufferEvents.size();
@@ -32,10 +37,6 @@ public:
         miniTestIndexes = pickRandomIndexes(testIndexes, 500);
 
     }
-    vector<vector<vector<float>>> getTrainingBatch(int batchSize);
-    vector<vector<vector<float>>> getMiniTestData();
-    int BUFFER_SIZE = 1024;
-    float TRAINING_SIZE = 0.8;
 
 private:
     map<string, vector<float>> allSamples;
