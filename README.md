@@ -24,15 +24,14 @@ This repository contains two main components.
  - dependencies
         - AWS CLI, tensorflow, python, node
         - I highly recommend creating a virtual environment... like:
-        ```
+```
 virtualenv --system-site-packages -p python3 ~/whatever-you-want
 source ~/whatever-you-want/bin/activate
 pip3 install --upgrade tensorflow 
 cd path/to/this/repo
 pip install ./cpp-piano-learning-cnn-data-provider/ --upgrade
 ```
- - run (train)
-         - type this in the shell "./scripts/run.sh" and hit enter
-
+ - train
+        - run in shell: `./train.sh`
 For better performance:
 I'd also suggest pip installing a locally compiled version of tensorflow (https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you won't get a warning about it in the console.
