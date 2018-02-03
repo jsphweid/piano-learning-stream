@@ -134,3 +134,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# wavs
+/wavs
+.vscode/

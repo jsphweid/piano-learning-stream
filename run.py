@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf 
 
 FFT_SIZE = 512
-CONV_SIZE = 5
+CONV_SIZE = 20
 NUM_KEYS = 88
 
 def get_weight_variable(shape):
@@ -74,17 +74,25 @@ train_step = tf.train.AdamOptimizer(0.001).minimize(loss_op)
 with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
+	saver = tf.train.Saver()
 
-	for i in range(50000):
+	lowest_loss = 10
+
+	for i in range(500000):
 		batch_xs, batch_ys = dataProvider.getTrainingBatch(30)
 
 		training_loss, _ = sess.run([loss_op, train_step], feed_dict={x_: batch_xs, y_: batch_ys, keep_prob: 0.5})
 
 		if i % 10 == 0:
+
 			test_xs, test_ys = dataProvider.getMiniTestData()
 			test_loss = loss_op.eval(feed_dict={x_: test_xs, y_: test_ys, keep_prob: 1.0})
+
 			print(i, ':', 'loss from training', training_loss, ': loss from test', test_loss)
-
-
-
+			
+			if test_loss < lowest_loss:
+				lowest_loss = test_loss
+				print('--------------------------> new record at num:', lowest_loss)
+				filename = '/var/tmp/pls_checkpoints/' + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
+				save_path = saver.save(sess, filename)
 

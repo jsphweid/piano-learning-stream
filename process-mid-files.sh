@@ -32,7 +32,8 @@ echo "------> Converting MIDI files in ${midiSourceDirectory} to raw json."
 echo "---------------------------------------------------------------------------------"
 
 for fullFileName in ${midiSourceDirectory}*.mid; do
-    targetOutput=${outputDirectory}$(basename ${fullFileName%.*}).json
+	fullFileNameWithoutSpaces=${fullFileName// /-}
+    targetOutput=${outputDirectory}$(basename ${fullFileNameWithoutSpaces%.*}).json
     echo "-Converting ${fullFileName} ---------> ${targetOutput}"
-    node ${projectBinariesFolder}MidiConvertWrapperAdvanced.js ${fullFileName} ${targetOutput} ${bufferSize} ${samplingRate}
+    node ${projectBinariesFolder}MidiConvertWrapperAdvanced.js "${fullFileName}" ${targetOutput} ${bufferSize} ${samplingRate}
 done

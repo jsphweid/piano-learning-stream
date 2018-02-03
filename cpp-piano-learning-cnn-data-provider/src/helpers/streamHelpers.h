@@ -44,22 +44,7 @@ map<string, vector<float>> loadSamplesIntoMemory(string ivyLocation) {
         vector<float> audioFileAsVector;
 
         audioFileAsVector.insert(audioFileAsVector.end(), &audioIn[0], &audioIn[sfinfo.frames]);
-    
-        if (keyName == "22-PedalOffMezzoPiano1Close") {
-            // for (int i = 0; i < sfinfo.frames; i++) {
-            //     cout << audioIn[i] << " ";
-            // }
-            // cout << endl;
-            // for (int i = 0; i < audioFileAsVector.size(); i++) {
-            //     cout << audioFileAsVector[i] << " ";
-            // }
-            // cout << endl;
-            // for (float thing : audioFileAsVector) {
-            //     cout << thing << " ";
-            // }
-            // cout << endl;
-            // cout << audioFileAsVector.size() << endl;
-        }
+
         ret[keyName] = audioFileAsVector;
 
         delete[] audioIn;
@@ -67,12 +52,6 @@ map<string, vector<float>> loadSamplesIntoMemory(string ivyLocation) {
         i++;
         ++it;
     }
-
-    // vector<float> sample = ret.find("22-PedalOffMezzoPiano1Close")->second;
-    // for (int i : sample) {
-    //     cout << i << " ";
-    // }
-    // cout << endl;
 
     return ret;
 }
@@ -229,72 +208,33 @@ void getFFTOfBuffer(int bufferSize, int fftSize, float* audioBufferIn, float* ma
 }
 
 InputLabelPairing processEvents(map<string, vector<float>> const &allSamples, vector<BufferEvent> bufferEvents, int bufferSize) {
-    // cout << "-------------------" << endl;
     auto* signal = new float[bufferSize]();
     int fftSize = (int) bufferSize / 2;
     auto* fft = new float[fftSize]();
     vector<float> ampLabelVector(88, 0);
 
-    // cout << "22-PedalOffMezzoPiano1Close.wav: ";
-    // vector<float> stuff = allSamples.find("22-PedalOffMezzoPiano1Close")->second;
-    // for (int const &item : stuff) {
-    //     cout << item << " ";
-    // }
-    // cout << endl;
-    // cout << "size" << stuff.size() << endl;
-
     for (BufferEvent bufferEvent : bufferEvents) {
-        // cout << endl;
-        // cout << "pianoNoteNum " << bufferEvent.pianoNoteNum << endl;
-        // cout << "velocity " << bufferEvent.velocity << endl;
-        // cout << "sampleStartIndex " << bufferEvent.sampleStartIndex << endl;
-        // cout << "sampleEndIndex " << bufferEvent.sampleEndIndex << endl;
-        // cout << "offsetStartIndex " << bufferEvent.offsetStartIndex << endl;
+
         string sampleName = pickAppropriateWavFile(bufferEvent.pianoNoteNum, bufferEvent.velocity);
         
         vector<float> sample = allSamples.find(sampleName)->second;
 
-        // cout << "picked this sample...: " << sampleName << endl;
-        // for (int const &item : sample) {
-        //     cout << item << " ";
-        // }
-        // cout << endl;
-        // cout << "size: " << sample.size() << endl;
-
-
         int sampleLength = bufferEvent.sampleEndIndex - bufferEvent.sampleStartIndex;
         float amp = 0;
-        // cout << "sample length: " << sampleLength << endl;
-        // cout << "offset start index: " << bufferEvent.offsetStartIndex << endl;
+
         for (int i = bufferEvent.offsetStartIndex, j = 0; i < bufferEvent.offsetStartIndex + sampleLength; i++, j++) {
             auto currentSample = sample[bufferEvent.sampleStartIndex + j];
             signal[i] += currentSample;
-            // cout << signal[i] << "i ";
             amp += (float) pow(currentSample, 2);
-            // cout << amp << "a ";
         }
-        // cout << endl;
-        // cout << "final amp for piano note: " << bufferEvent.pianoNoteNum << ": " << amp << endl;
         ampLabelVector[bufferEvent.pianoNoteNum - 1] = amp;
     }
-
-    // for (int i = 0; i < bufferSize; i++) {
-    //     cout << signal[i] << " ";
-    // }
-    // cout << endl;
-
 
     getFFTOfBuffer(bufferSize, fftSize, signal, fft);
     vector<float> fftAsVector;
     fftAsVector.insert(fftAsVector.end(), &fft[0], &fft[fftSize]);
     delete[] fft;
     delete[] signal;
-
-    // cout << "fft of buffer" << endl;
-    // for (auto item : fftAsVector) {
-    //     cout << item << " ";
-    // }
-    // cout << endl;
 
     InputLabelPairing ret;
     ret.ampLabel = ampLabelVector;
