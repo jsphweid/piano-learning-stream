@@ -5,7 +5,7 @@ using namespace std;
 namespace fs = ::boost::filesystem;
 
 bool tmpFolderIsFull() {
-    fs::recursive_directory_iterator it("/var/tmp/ivy");
+    fs::recursive_directory_iterator it("/var/tmp/pls/ivy");
     fs::recursive_directory_iterator endit;
     int count = 0;
     while(it != endit) {

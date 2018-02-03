@@ -13,26 +13,26 @@ This repository contains two main components.
 # Getting it to run
  - preparing the samples
         - download here: http://ivyaudio.com/Piano-in-162
-        - extract all 880 'pedal off close' samples to `/var/tmp/ivy` so that it looks like:
+        - extract all 880 'pedal off close' samples to `/var/tmp/pls/ivy` so that it looks like:
 ```
-/var/tmp/ivy/01-PedalOffForte1Close.wav
-/var/tmp/ivy/01-PedalOffForte2Close.wav
+/var/tmp/pls/ivy/01-PedalOffForte1Close.wav
+/var/tmp/pls/ivy/01-PedalOffForte2Close.wav
 ...
-/var/tmp/ivy/88-PedalOffPiano1Close.wav
-/var/tmp/ivy/88-PedalOffPiano2Close.wav
+/var/tmp/pls/ivy/88-PedalOffPiano1Close.wav
+/var/tmp/pls/ivy/88-PedalOffPiano2Close.wav
 ```
- - preparing the midi-json files
-         - find a bunch of midi files online or where-ever. It doesn't even really matter what their content is (since it will render them as piano and learn from that anyways...)
-         - use `./bin/MidiConvertWrapperAdvanced.js` to convert them into my special json files [(MidiConvertWrapperAdvanced)](https://github.com/jsphweid/MidiConvertWrapperAdvanced)
-         - put them in the folder `~/Downloads/dum` (temp)
-  - running everything
-         - I highly recommend creating a virtual python environment with virtualenv. Something like:
-```
+ - dependencies
+        - AWS CLI, tensorflow, python, node
+        - I highly recommend creating a virtual environment... like:
+        ```
 virtualenv --system-site-packages -p python3 ~/whatever-you-want
-source ~/tensorflow/bin/activate
+source ~/whatever-you-want/bin/activate
 pip3 install --upgrade tensorflow 
 cd path/to/this/repo
 pip install ./cpp-piano-learning-cnn-data-provider/ --upgrade
-python run.py
 ```
+ - run (train)
+         - type this in the shell "./scripts/run.sh" and hit enter
+
+For better performance:
 I'd also suggest pip installing a locally compiled version of tensorflow (https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you won't get a warning about it in the console.

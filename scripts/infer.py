@@ -1,7 +1,7 @@
 import numpy as np
+import matplotlib.pyplot as plt
 from numpy import reshape
 import tensorflow as tf
-import matplotlib.pyplot as plt
 import wave
 import math
 from scipy.fftpack import fft
@@ -89,71 +89,29 @@ wave_file = wave.open('./wavs/bachCMajor.wav', 'r')
 num_samples = wave_file.getnframes()
 buffer_length = 1024
 fft_length = int(buffer_length / 2)
+num_even_buffers = math.floor(num_samples / buffer_length)
 all_samples = getWavFileNormalizedToOnes(wave_file)
 
 # numpy matrix for the entire size of the file
 
-NUM_OF_DIVISONS_WITHIN_BUFFER = 4
-STRIDE_LENGTH = int(buffer_length / NUM_OF_DIVISONS_WITHIN_BUFFER)
-result = []
-
-def square_sum_average(list_of_tensors):
-	first_tensor = list_of_tensors[0]
-	num_of_tensors = len(list_of_tensors)
-	tensor_size = len(first_tensor)
-	ret = []
-	for i in range(tensor_size):
-		sum = 0
-		for tensor in list_of_tensors:
-			sum += tensor[i] ** 2
-		ret.append(sum / num_of_tensors)
-	return ret
-
-thing = [
-	[1, 2, 3, 4],
-	[2, 3, 4, 5],
-	[3, 4, 3, 4]
-]
-print(square_sum_average(thing))
+predictions = []
 
 with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
-	saver.restore(sess, "/var/tmp/pls_models/412190-0.0332006piano-learning-stream.ckpt")
-	predictions = []
+	saver.restore(sess, "/var/tmp/pls/models/311690-0.0344654piano-learning-stream.ckpt")
 
-	num_even_buffers = int(math.floor(num_samples / buffer_length)) - 1 # -1 because the subdividing makes it go over unless you take 1 whole step off
-	print('num_even_buffers', num_even_buffers)
-	max_extreme_length = num_even_buffers * buffer_length
-	print('max_extreme_length', max_extreme_length)
-	print("established variables and graph... max_extreme_length is", max_extreme_length)
+	for i in range(num_even_buffers):
 
-	for i in range(0, max_extreme_length, STRIDE_LENGTH):
-		# print('i', i)
-		this_buffer_signal = all_samples[i:i + buffer_length]
-		# print('num_even_buffers', num_even_buffers, 'allsamples length', len(all_samples), 'i', i, 'i + buffer-len', i + buffer_length)
+		start_index = i * buffer_length
+		this_buffer_signal = all_samples[start_index:start_index + buffer_length]
 		this_buffer_fft = abs(fft(this_buffer_signal))[0:fft_length]
-		this_buffer_fft_reshaped = this_buffer_fft.reshape(1, fft_length)
+		this_buffer_fft_reshaped = this_buffer_fft.reshape((1, fft_length))
 		raw_prediction = sess.run(y_conv, feed_dict={ x_: this_buffer_fft_reshaped.astype(float), keep_prob: 1.0 })
 		predictions.append(raw_prediction[0])
-	# print("ran predictions for ", len(predictions), "slices")
-
-	# print('predictions', predictions[0:3])
-	num_predictions = len(predictions)
-	# print('num_predictions', num_predictions)
-	for i in range(num_even_buffers):
-		start = i * NUM_OF_DIVISONS_WITHIN_BUFFER
-		end = start + NUM_OF_DIVISONS_WITHIN_BUFFER
-		# print('start', start, 'end', end)
-		# print('what', predictions[start:end])
-		# print('-----', square_sum_average(predictions[start:end]))
-		result.append(square_sum_average(predictions[start:end]))
-	print("squared, summed, and averaged for a total of", len(result), "slices")
-
-
 
 def plot_arbitrary_2d_data_as_spectrogram(data, x_label="X", y_label="Y"):
-    print(np.shape(data))
+    
     x_size, y_size = np.shape(data)
 
     plt.figure(figsize=(15, 7.5))
@@ -177,6 +135,5 @@ def plot_arbitrary_2d_data_as_spectrogram(data, x_label="X", y_label="Y"):
     plt.show()
     plt.clf()
 
-plot_arbitrary_2d_data_as_spectrogram(result, 'sample number', 'key')
-
+plot_arbitrary_2d_data_as_spectrogram(predictions, 'sample number', 'key')
 
