@@ -119,7 +119,7 @@ print(square_sum_average(thing))
 with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
-	saver.restore(sess, "/var/tmp/pls_models/412190-0.0332006piano-learning-stream.ckpt")
+	saver.restore(sess, "/var/tmp/pls/models/412190-0.0332006piano-learning-stream.ckpt")
 	predictions = []
 
 	num_even_buffers = int(math.floor(num_samples / buffer_length)) - 1 # -1 because the subdividing makes it go over unless you take 1 whole step off

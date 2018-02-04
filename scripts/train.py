@@ -1,13 +1,13 @@
-# establish my custom data provider
+FFT_SIZE = 512
+CONV_SIZE = 20
+NUM_KEYS = 88
+CHECKPOINT_DIR = '/var/tmp/pls/checkpoints/'
+
 import cpp_piano_learning_cnn_data_provider as provider
 dataProvider = provider.PianoLearnerDataProvider()
 
 import numpy as np
 import tensorflow as tf 
-
-FFT_SIZE = 512
-CONV_SIZE = 20
-NUM_KEYS = 88
 
 def get_weight_variable(shape):
 	initial = tf.truncated_normal(shape, stddev=0.1)
@@ -93,6 +93,6 @@ with tf.Session() as sess:
 			if test_loss < lowest_loss:
 				lowest_loss = test_loss
 				print('--------------------------> new record at num:', lowest_loss)
-				filename = '/var/tmp/pls_checkpoints/' + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
+				filename = CHECKPOINT_DIR + str(i) + '-' + str(test_loss) + 'piano-learning-stream.ckpt'
 				save_path = saver.save(sess, filename)
 

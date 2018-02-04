@@ -4,11 +4,15 @@ from numpy import reshape
 import tensorflow as tf
 import wave
 import math
+import sys
 from scipy.fftpack import fft
 
 FFT_SIZE = 512
 CONV_SIZE = 20
 NUM_KEYS = 88
+
+WAV_FILE_PATH = sys.argv[1]
+MODEL_PATH = sys.argv[2]
 
 def get_weight_variable(shape):
 	initial = tf.truncated_normal(shape, stddev=0.1)
@@ -85,7 +89,7 @@ def getWavFileNormalizedToOnes(wavFile):
 
 
 # load wav file and get contents
-wave_file = wave.open('./wavs/bachCMajor.wav', 'r')
+wave_file = wave.open(WAV_FILE_PATH, 'r')
 num_samples = wave_file.getnframes()
 buffer_length = 1024
 fft_length = int(buffer_length / 2)
@@ -99,7 +103,7 @@ predictions = []
 with tf.Session() as sess:
 
 	sess.run(tf.global_variables_initializer())
-	saver.restore(sess, "/var/tmp/pls_models/311690-0.0344654piano-learning-stream.ckpt")
+	saver.restore(sess, MODEL_PATH)
 
 	for i in range(num_even_buffers):
 

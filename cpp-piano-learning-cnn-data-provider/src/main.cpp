@@ -18,9 +18,9 @@ public:
 
     PianoLearnerDataProvider() {
         // load things into memory
-        allSamples = loadSamplesIntoMemory("/var/tmp/ivy/");
+        allSamples = loadSamplesIntoMemory("/var/tmp/pls/ivy/");
         map<string, int> sampleSizes = determineSampleSizes(allSamples);
-        vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/Users/josephweidinger/Downloads/dum/", sampleSizes);
+        vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/var/tmp/pls/data/json-files/", sampleSizes);
 
         // get index arrays
         auto numTotalBuffers = (int) vectorOfVectorBufferEvents.size();

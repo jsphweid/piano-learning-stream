@@ -28,7 +28,7 @@ map<string, vector<float>> loadSamplesIntoMemory(string ivyLocation) {
 
         // print progress
         if (i % (total / 10) == 0) {
-            cout << 100.0 * ((float) i / (float) total) << "% done loading wavs" << endl;
+            cout << 100.0 * ((float) i / (float) total) << "% done loading wavs into memory" << endl;
         }
         string fullFilename = it->path().string();
         SNDFILE* sndfile;
@@ -154,7 +154,7 @@ vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder, map<string
         }
 
         string fullFilename = it->path().string();
-        cout << "loading json midi file: " << fullFilename << endl;
+        cout << "loading json midi file into memory: " << fullFilename << endl;
         ifstream input(fullFilename);
         json j;
         input >> j;
