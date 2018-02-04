@@ -38,3 +38,14 @@ pip install ./cpp-piano-learning-cnn-data-provider/ --upgrade
 
 For better performance:
 I'd also suggest pip installing a locally compiled version of tensorflow (https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you won't get a warning about it in the console.
+
+# Does it do anything?
+Kind of. I haven't experimented a lot with hyperparameters or the model structure but my initial conclusions are:
+ - Is it useful? not yet. But I have a gut feeling there's a lot of potential for some of the processes I've discovered here.
+- Does it learn? yes it does learn and the loss goes down. Check out these renderings from various stages of the learning process. If I give it a bach invention at first it has no idea but then with some training it does clearly sense things going on.
+
+![start](https://s3.amazonaws.com/piano-learning-stream/start.png "start")
+
+![later](https://s3.amazonaws.com/piano-learning-stream/later.png "later")
+
+
