@@ -32,6 +32,9 @@ cd path/to/this/repo
 pip install ./cpp-piano-learning-cnn-data-provider/ --upgrade
 ```
  - train
-        - run in shell: `./train.sh`
+        - run `./train.sh`
+ - infer
+        - run `./infer.sh path/to/wav/that/you/want/to/infer.wav`
+
 For better performance:
 I'd also suggest pip installing a locally compiled version of tensorflow (https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you won't get a warning about it in the console.
