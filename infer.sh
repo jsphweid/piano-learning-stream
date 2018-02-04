@@ -2,7 +2,7 @@
 
 wavFile=$1
 
-if ! [ -f  $wavFile ]; then
+if ! [ -f  $wavFile ] || [[ -z "${wavFile// }" ]]; then
     echo "must pass a .wav file to infer on as first argument..."
     exit 1
 fi
