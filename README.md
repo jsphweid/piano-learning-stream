@@ -49,3 +49,6 @@ Kind of. I haven't experimented a lot with hyperparameters or the model structur
 ![later](https://s3.amazonaws.com/piano-learning-stream/later.png "later")
 
 
+
+# TODO
+ - fix pybind documentation / types

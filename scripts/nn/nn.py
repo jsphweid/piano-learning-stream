@@ -22,6 +22,7 @@ def max_pool_2(x):
 
 ######### DECLARE VARIABLES
 x_ = tf.placeholder(tf.float32, shape=[None, FFT_SIZE], name="x_")
+y_ = tf.placeholder(tf.float32, shape=[None, NUM_KEYS], name="y_")
 keep_prob = tf.placeholder(tf.float32)
 
 x_resized = tf.reshape(x_, [-1, FFT_SIZE, 1])
@@ -63,6 +64,9 @@ b_fc2 = get_bias_variable([NUM_KEYS])
 
 y_conv = tf.matmul(h_fc1_dropped, W_fc2) + b_fc2
 
+loss_op = tf.reduce_mean(tf.square(tf.subtract(y_, y_conv)))
+train_step = tf.train.AdamOptimizer(0.001).minimize(loss_op)
+
 saver = tf.train.Saver()
 
 class NNSession:
@@ -74,9 +78,19 @@ class NNSession:
 		self.sess.close()
 
 	def runGraph(self, x, keep_probability):
-		return self.sess.run(y_conv, feed_dict={x_: x, keep_prob: keep_probability})
+		return self.sess.run(y_conv, feed_dict={ x_: x, keep_prob: keep_probability })
 
 	def restoreGraph(self, modelPath):
 		saver.restore(self.sess, modelPath)
+
+	def getLoss(self, x, y, keep_probability):
+		return self.sess.run(loss_op, feed_dict={ x_: x, y_: y, keep_prob: keep_probability })
+
+	def train(self, x, y, keep_probability):
+		training_loss, _ = self.sess.run([loss_op, train_step], feed_dict={ x_: x, y_: y, keep_prob: keep_probability })
+		return training_loss
+	
+	def saveCheckpoint(self, filename):
+		saver.save(self.sess, filename)
 
 
