@@ -84,7 +84,7 @@ vector<vector<vector<float>>> PianoLearnerDataProvider::getMiniTestData() {
 
 PYBIND11_MODULE(cpp_piano_learning_cnn_data_provider, m) {
     m.doc() = R"pbdoc(
-        Pybind11 example plugin
+        Piano Learning Stream Data Provider
         -----------------------
 
         .. currentmodule:: cpp_piano_learning_cnn_data_provider
@@ -92,8 +92,8 @@ PYBIND11_MODULE(cpp_piano_learning_cnn_data_provider, m) {
         .. autosummary::
            :toctree: _generate
 
-           add
-           subtract
+           getTrainingBatch
+           getMiniTestData
     )pbdoc";
 
     py::class_<PianoLearnerDataProvider> pianoLearnerDataProvider(m, "PianoLearnerDataProvider");

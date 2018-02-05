@@ -51,4 +51,4 @@ Kind of. I haven't experimented a lot with hyperparameters or the model structur
 
 
 # TODO
- - fix pybind documentation / types
+ - 
