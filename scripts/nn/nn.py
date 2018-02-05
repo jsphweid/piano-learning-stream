@@ -73,9 +73,8 @@ class NNSession:
 	def __exit__(self):
 		self.sess.close()
 
-	def runGraph(self, x, keep_prob):
-		print(x)
-		self.sess.run(y_conv, feed_dict={ x_: x, keep_prob: keep_prob })
+	def runGraph(self, x, keep_probability):
+		return self.sess.run(y_conv, feed_dict={x_: x, keep_prob: keep_probability})
 
 	def restoreGraph(self, modelPath):
 		saver.restore(self.sess, modelPath)

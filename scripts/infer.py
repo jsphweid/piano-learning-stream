@@ -75,5 +75,5 @@ def plot_arbitrary_2d_data_as_spectrogram(data, x_label="X", y_label="Y"):
     plt.show()
     plt.clf()
 
-# plot_arbitrary_2d_data_as_spectrogram(predictions, 'sample number', 'key')
+plot_arbitrary_2d_data_as_spectrogram(predictions, 'sample number', 'key')
 
