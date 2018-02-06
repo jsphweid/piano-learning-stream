@@ -8,8 +8,25 @@ namespace fs = ::boost::filesystem;
 using json = nlohmann::json;
 
 #define MEOW_FFT_IMPLEMENTAION
-#include "../lib-src/header-only/meow_fft.h"
+#include "meow_fft.h"
 #include <complex>
+
+class BufferEvent {
+public:
+    int pianoNoteNum;
+    float velocity;
+    int sampleStartIndex;
+    int sampleEndIndex;
+    int offsetStartIndex;
+};
+
+class InputLabelPairing {
+public:
+    vector<float> fftInput;
+    vector<float> ampLabel;
+};
+
+typedef vector<BufferEvent> ArrOfEventsInOneBuffer;
 
 
 #ifndef PIANOLEARNINGEARS_STREAMHELPERS_H
@@ -90,28 +107,13 @@ map<string, int> determineSampleSizes(map<string, vector<float>> inMemorySamples
     return ret;
 }
 
-class BufferEvent {
-public:
-    int pianoNoteNum;
-    float velocity;
-    int sampleStartIndex;
-    int sampleEndIndex;
-    int offsetStartIndex;
-};
+vector<ArrOfEventsInOneBuffer> processOneJsonFile(json j, map<string, int> sampleSizes) {
 
-class InputLabelPairing {
-public:
-    vector<float> fftInput;
-    vector<float> ampLabel;
-};
-
-vector<vector<BufferEvent>> processOneJsonFile(json j, map<string, int> sampleSizes) {
-
-    vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
+    vector<ArrOfEventsInOneBuffer> vectorOfVectorBufferEvents;
 
     for (json::iterator jsoniterator = j.begin(); jsoniterator != j.end(); ++jsoniterator) {
         bool containsOutOfRange = false;
-        vector<BufferEvent> vectorOfBufferEvents;
+        ArrOfEventsInOneBuffer vectorOfBufferEvents;
         // if this buffer has an index greater than the loaded wavs can provide... skip it..
         for (auto event: jsoniterator.value()) {
 
@@ -139,12 +141,12 @@ vector<vector<BufferEvent>> processOneJsonFile(json j, map<string, int> sampleSi
     return vectorOfVectorBufferEvents;
 }
 
-vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder, map<string, int> sampleSizes) {
+vector<ArrOfEventsInOneBuffer> loadMidiJsonIntoMemory(string jsonFolder, map<string, int> sampleSizes) {
 
     fs::recursive_directory_iterator it(jsonFolder);
     fs::recursive_directory_iterator endit;
 
-    vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
+    vector<ArrOfEventsInOneBuffer> vectorOfVectorBufferEvents;
 
     while(it != endit) {
 
@@ -159,7 +161,7 @@ vector<vector<BufferEvent>> loadMidiJsonIntoMemory(string jsonFolder, map<string
         json j;
         input >> j;
 
-        vector<vector<BufferEvent>> oneFile = processOneJsonFile(j, sampleSizes);
+        vector<ArrOfEventsInOneBuffer> oneFile = processOneJsonFile(j, sampleSizes);
         vectorOfVectorBufferEvents.insert(vectorOfVectorBufferEvents.end(), oneFile.begin(), oneFile.end());
         ++it;
     }
@@ -207,7 +209,7 @@ void getFFTOfBuffer(int bufferSize, int fftSize, float* audioBufferIn, float* ma
     free(fft_real);
 }
 
-InputLabelPairing processEvents(map<string, vector<float>> const &allSamples, vector<BufferEvent> bufferEvents, int bufferSize) {
+InputLabelPairing processEvents(map<string, vector<float>> const &allSamples, ArrOfEventsInOneBuffer bufferEvents, int bufferSize) {
     auto* signal = new float[bufferSize]();
     int fftSize = (int) bufferSize / 2;
     auto* fft = new float[fftSize]();

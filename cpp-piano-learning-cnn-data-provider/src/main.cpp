@@ -20,10 +20,10 @@ public:
         // load things into memory
         allSamples = loadSamplesIntoMemory("/var/tmp/pls/ivy/");
         map<string, int> sampleSizes = determineSampleSizes(allSamples);
-        vectorOfVectorBufferEvents = loadMidiJsonIntoMemory("/var/tmp/pls/data/json-files/", sampleSizes);
+        allEvents = loadMidiJsonIntoMemory("/var/tmp/pls/data/json-files/", sampleSizes);
 
         // get index arrays
-        auto numTotalBuffers = (int) vectorOfVectorBufferEvents.size();
+        auto numTotalBuffers = (int) allEvents.size();
         randomIndexes = generateRandomIndexes(numTotalBuffers);
         auto numTrainingBuffers = (int) round(numTotalBuffers * TRAINING_SIZE);
 
@@ -37,7 +37,7 @@ public:
     }
 private:
     map<string, vector<float>> allSamples;
-    vector<vector<BufferEvent>> vectorOfVectorBufferEvents;
+    vector<ArrOfEventsInOneBuffer> allEvents;
     vector<int> randomIndexes;
     vector<int> trainingIndexes;
     vector<int> testIndexes;
@@ -53,7 +53,7 @@ vector<vector<vector<float>>> PianoLearnerDataProvider::getTrainingBatch(int bat
     vector<vector<float>> labels;
 
     for (auto & i : thisBatchRandomIndexes) {
-        InputLabelPairing pair = processEvents(allSamples, vectorOfVectorBufferEvents[i], BUFFER_SIZE);
+        InputLabelPairing pair = processEvents(allSamples, allEvents[i], BUFFER_SIZE);
         inputs.push_back(pair.fftInput);
         labels.push_back(pair.ampLabel);
     }
@@ -70,7 +70,7 @@ vector<vector<vector<float>>> PianoLearnerDataProvider::getMiniTestData() {
     vector<vector<float>> labels;
 
     for (auto & i : miniTestIndexes) {
-        InputLabelPairing pair = processEvents(allSamples, vectorOfVectorBufferEvents[i], BUFFER_SIZE);
+        InputLabelPairing pair = processEvents(allSamples, allEvents[i], BUFFER_SIZE);
         inputs.push_back(pair.fftInput);
         labels.push_back(pair.ampLabel);
     }

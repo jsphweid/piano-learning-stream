@@ -13,8 +13,6 @@ include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIR})
 find_package(Boost COMPONENTS system serialization filesystem REQUIRED)
 
-include_directories(src/lib-src/header-only)
-
 ADD_LIBRARY(libsndfile SHARED IMPORTED)
 SET_PROPERTY(TARGET libsndfile PROPERTY IMPORTED_LOCATION ${cellar_dir}/libsndfile/1.0.28/lib/libsndfile.dylib)
 INCLUDE_DIRECTORIES(include ${cellar_dir}/libsndfile/1.0.28/include)

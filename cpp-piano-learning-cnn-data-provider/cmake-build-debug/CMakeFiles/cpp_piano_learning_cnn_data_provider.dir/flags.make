@@ -6,5 +6,5 @@ CXX_FLAGS = -g -fPIC -fvisibility=hidden   -std=c++14
 
 CXX_DEFINES = -Dcpp_piano_learning_cnn_data_provider_EXPORTS
 
-CXX_INCLUDES = -I/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/include -I/Users/josephweidinger/anaconda/include/python3.6m -I/usr/local/Cellar/boost/1.65.1/include -I/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/src/lib-src/header-only -I/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/include -I/usr/local/Cellar/libsndfile/1.0.28/include 
+CXX_INCLUDES = -I/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/pybind11/include -I/Users/josephweidinger/anaconda/include/python3.6m -I/usr/local/Cellar/boost/1.65.1/include -I/Users/josephweidinger/git/piano-learning-cnn-stream/cpp-piano-learning-cnn-data-provider/include -I/usr/local/Cellar/libsndfile/1.0.28/include 
 
