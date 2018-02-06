@@ -45,5 +45,5 @@ model=${checkpointsDir}${checkpointFiles[number]}
 
 # -----------------------------
 
-echo "infering model..."
+echo "infer using modal..."
 python ./scripts/infer.py $wavFile $model
