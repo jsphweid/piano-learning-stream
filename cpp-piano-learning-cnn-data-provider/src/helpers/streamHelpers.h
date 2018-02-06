@@ -27,6 +27,7 @@ public:
 };
 
 typedef vector<BufferEvent> ArrOfEventsInOneBuffer;
+typedef map<string, int> LengthOfEachSampleMap;
 
 
 #ifndef PIANOLEARNINGEARS_STREAMHELPERS_H
@@ -99,15 +100,15 @@ string pickAppropriateWavFile(int pianoNote, float velocity) {
     return noteNum + "-" + levels[index];
 }
 
-map<string, int> determineSampleSizes(map<string, vector<float>> inMemorySamples) {
-    map<string, int> ret;
+LengthOfEachSampleMap getLengthOfEachSampleMap(map<string, vector<float>> inMemorySamples) {
+    LengthOfEachSampleMap ret;
     for (auto const &vec : inMemorySamples) {
         ret[vec.first] = vec.second.size();
     }
     return ret;
 }
 
-vector<ArrOfEventsInOneBuffer> processOneJsonFile(json j, map<string, int> sampleSizes) {
+vector<ArrOfEventsInOneBuffer> processOneJsonFile(json j, LengthOfEachSampleMap sampleSizes) {
 
     vector<ArrOfEventsInOneBuffer> vectorOfVectorBufferEvents;
 
@@ -141,7 +142,7 @@ vector<ArrOfEventsInOneBuffer> processOneJsonFile(json j, map<string, int> sampl
     return vectorOfVectorBufferEvents;
 }
 
-vector<ArrOfEventsInOneBuffer> loadMidiJsonIntoMemory(string jsonFolder, map<string, int> sampleSizes) {
+vector<ArrOfEventsInOneBuffer> loadMidiJsonIntoMemory(string jsonFolder, LengthOfEachSampleMap sampleSizes) {
 
     fs::recursive_directory_iterator it(jsonFolder);
     fs::recursive_directory_iterator endit;
