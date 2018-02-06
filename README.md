@@ -22,8 +22,12 @@ This repository contains two main components.
 /var/tmp/pls/ivy/88-PedalOffPiano2Close.wav
 ```
  - dependencies
-        - AWS CLI, tensorflow, python, node
-        - I highly recommend creating a virtual environment... like:
+        - the samples placed in the correct place as noted above...
+        - `AWS CLI` - for downloading latest training files automagically
+        - `node` - for preprocessing midi files
+        - `boost` - `brew install boost`
+        - finally... `tensorflow`, `python`
+                - I highly recommend creating a virtual environment... like:
 ```
 virtualenv --system-site-packages -p python3 ~/whatever-you-want
 source ~/whatever-you-want/bin/activate
@@ -37,7 +41,7 @@ pip install ./cpp-piano-learning-cnn-data-provider/ --upgrade
         - run `./infer.sh path/to/wav/that/you/want/to/infer.wav`
 
 For better performance:
-I'd also suggest pip installing a locally compiled version of tensorflow (https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you won't get a warning about it in the console.
+I'd also suggest compiling a version of tensorflow for local usage(https://www.tensorflow.org/install/install_sources). It is somewhat involved but it'll most likely make this train quicker. Plus you shouldn't get performance warnings in the console.
 
 # Does it do anything?
 Kind of. I haven't experimented a lot with hyperparameters or the model structure but my initial conclusions are:
@@ -47,8 +51,3 @@ Kind of. I haven't experimented a lot with hyperparameters or the model structur
 ![start](https://s3.amazonaws.com/piano-learning-stream/start.png "start")
 
 ![later](https://s3.amazonaws.com/piano-learning-stream/later.png "later")
-
-
-
-# TODO
- - 
