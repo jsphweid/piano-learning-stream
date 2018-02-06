@@ -6,6 +6,7 @@ import tensorflow as tf
 from nn import nn
 import wave
 import math
+import scipy.io.wavfile
 
 WAV_FILE_PATH = sys.argv[1]
 MODEL_PATH = sys.argv[2]
@@ -42,33 +43,13 @@ predictions = []
 nnSess = nn.NNSession()
 nnSess.restoreGraph(MODEL_PATH)
 
-for i in range(400):
+for i in range(num_even_buffers):
 	start_index = i * BUFFER_LENGTH
 	this_buffer_signal = all_samples[start_index:start_index + BUFFER_LENGTH]
 	this_buffer_fft = abs(fft(this_buffer_signal))[0:FFT_SIZE]
 	this_buffer_fft_reshaped = this_buffer_fft.reshape((1, FFT_SIZE))
 	raw_prediction = nnSess.runGraph(this_buffer_fft_reshaped.astype(float), 1.0)
 	predictions.append(raw_prediction[0])
-
-def make_wave_from_intensity_and_index(index, intensity):
-    frequency = 440 * (1.059463094359 ** (index - 49))
-    x = np.arange(BUFFER_LENGTH)
-    return np.sin(2 * np.pi * frequency * x / 44100) * intensity
-    
-master_signals = []
-
-for prediction in predictions:
-    signals = []
-    for index, intensity in enumerate(prediction):
-        signals.append(make_wave_from_intensity_and_index(index, intensity))
-    master_signals.append([sum(x) for x in zip(*signals)])
-
-final_signal = [item for sublist in master_signals for item in sublist]
-normalization_factor = np.amax(final_signal)
-final_signal = final_signal * (1 / normalization_factor)
-
-import scipy.io.wavfile
-scipy.io.wavfile.write("karplus.wav", 44100, final_signal)
 
 def plot_arbitrary_2d_data_as_spectrogram(data, x_label="X", y_label="Y"):
     
@@ -95,5 +76,4 @@ def plot_arbitrary_2d_data_as_spectrogram(data, x_label="X", y_label="Y"):
     plt.show()
     plt.clf()
 
-# plot_arbitrary_2d_data_as_spectrogram(predictions, 'sample number', 'key')
-
+plot_arbitrary_2d_data_as_spectrogram(predictions, 'sample number', 'key')
