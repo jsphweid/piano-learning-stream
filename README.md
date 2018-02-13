@@ -46,7 +46,7 @@ I'd also suggest compiling a version of tensorflow for local usage(https://www.t
 # Does it do anything?
 Kind of. I haven't experimented a lot with hyperparameters or the model structure but my initial conclusions are:
  - Is it useful? not yet. It's shows faint promise at best, but I have a gut feeling there's a lot of potential for some of the processes I've discovered here.
-- Does it learn? yes it does learn and the loss goes down. Check out these renderings from various stages of the learning process. If I give it a bach invention at first it has no idea but then with some training it does clearly sense things going on.
+- Does it learn? yes it does learn and the loss goes down. Check out these renderings from various stages of the learning process. If I give it Bach Invention #1, it clearly has no idea what it's hearing at first but then with some training it does clearly sense things going on. It seems to do better when there is only one note at a time for now.
 
 ![start](https://s3.amazonaws.com/piano-learning-stream/start.png "start")
 
